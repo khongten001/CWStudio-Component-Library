@@ -27,22 +27,22 @@ const
   { Version components — keep in sync with VerInfo in the .dproj files }
   CWStudioVersionMajor   = 1;
   CWStudioVersionMinor   = 6;
-  CWStudioVersionRelease = 1;
+  CWStudioVersionRelease = 2;
   CWStudioVersionBuild   = 0;
 
   { Human-readable version (Major.Minor.Release) }
-  CWStudioVersion = '1.6.1';
+  CWStudioVersion = '1.6.2';
 
   { Full version in VerInfo format (Major.Minor.Release.Build) }
-  CWStudioVersionFull = '1.6.1.0';
+  CWStudioVersionFull = '1.6.2.0';
 
-  { Version label shown on the splash screen / in the About Box, e.g. 'V1.6.1.0' }
+  { Version label shown on the splash screen / in the About Box, e.g. 'V1.6.2.0' }
   CWStudioVersionLabel = 'V' + CWStudioVersionFull;
 
   { Product name — appears on the splash screen and in the IDE About Box }
   CWStudioProductName = 'CWStudio Component';
 
-  { Full caption: name + version, e.g. 'CWStudio Component 1.6.1' }
+  { Full caption: name + version, e.g. 'CWStudio Component 1.6.2' }
   CWStudioCaption = CWStudioProductName + ' ' + CWStudioVersion;
 
   CWStudioCopyright = '© Czesław Włudarczyk';

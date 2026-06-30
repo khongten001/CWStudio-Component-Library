@@ -34,6 +34,9 @@ uses
   Vcl.Controls, Vcl.Graphics, Vcl.StdCtrls, Vcl.Forms, Vcl.Menus, Vcl.ImgList, System.UITypes;
 
 type
+  // Button style shared by TCWSEdit and the masked TCWSEditMask. Declared once
+  // here, in the plain-edit unit; CWSEditMask reuses it through "uses CWSEdit",
+  // the same way Vcl.Mask reuses types declared in Vcl.StdCtrls.
   TCWSEditButtonStyle = (ebsNone, ebsClear, ebsSearch, ebsPassword, ebsCustom);
 
   TCWSBufferedEdit = class(TEdit)

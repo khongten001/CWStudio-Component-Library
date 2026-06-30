@@ -6,6 +6,7 @@
 
 *Modern Windows 11 / WinUI 3 styled VCL components for Delphi*
 
+[![Version: 1.6.2](https://img.shields.io/badge/version-1.6.2-blue.svg)](#)
 [![License: MIT](https://img.shields.io/badge/license-MIT-brightgreen.svg)](#licencja--license)
 [![Platform: VCL](https://img.shields.io/badge/platform-VCL%20%7C%20Delphi-red.svg)](#wymagania--requirements)
 [![Windows 11](https://img.shields.io/badge/style-Windows%2011%20%7C%20WinUI%203-0078D4.svg)](#)
@@ -229,7 +230,7 @@ Jeśli komponenty CWStudio okazały się przydatne i chcesz wesprzeć dalszy roz
 
 ## 📄 Licencja
 
-Biblioteka jest udostępniona na licencji **MIT** — możesz jej używać, modyfikować i rozpowszechniać w dowolnych projektach komercyjnych lub niekomercyjnych. Warunkiem jest zachowanie informacji o autorstwie i treści licencji (zobacz sekcję [⚖️ Wymagane przypisanie autorstwa](#️-wymagane-przypisanie-autorstwa) oraz plik [`LICENSE`](LICENSE)).
+Biblioteka jest udostępniona na licencji **MIT** — możesz jej używać, modyfikować i rozpowszechniać w dowolnych projektach komercyjnych lub niekomercyjnych. Warunkiem jest zachowanie informacji o autorstwie i treści licencji (zobacz sekcję [⚖️ Wymagane przypisanie autorstwa](#️-wymagane-przypisanie-autorstwa) oraz plik [`LICENSE`](LICENSE)). Szczegółowe informacje o licencjach zależności znajdują się w pliku [`THIRD_PARTY_LICENSES.md`](THIRD_PARTY_LICENSES.md).
 
 <br>
 
@@ -452,7 +453,7 @@ If you find CWStudio useful and would like to support the ongoing development of
 
 ## 📄 License
 
-The library is released under the **MIT** license — you may use, modify, and redistribute it in any project, commercial or non-commercial, provided that the copyright notice and attribution are preserved (see the [⚖️ Attribution](#️-attribution) section and the [`LICENSE`](LICENSE) file).
+The library is released under the **MIT** license — you may use, modify, and redistribute it in any project, commercial or non-commercial, provided that the copyright notice and attribution are preserved (see the [⚖️ Attribution](#️-attribution) section and the [`LICENSE`](LICENSE) file). Please refer to [`THIRD_PARTY_LICENSES.md`](THIRD_PARTY_LICENSES.md) for the licenses of the third-party dependencies.
 
 <br>
 

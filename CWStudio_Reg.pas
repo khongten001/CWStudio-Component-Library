@@ -163,10 +163,10 @@ begin
   Bmp := LoadSplashBitmap;
   try
     SplashScreenServices.AddPluginBitmap(
-      CWStudioCaption,        { 'CWStudio Component 1.6.1' }
+      CWStudioCaption,        { 'CWStudio Component 1.6.2' }
       Bmp.Handle,
       False,                  { not an unregistered version }
-      CWStudioVersionLabel);  { 'V1.6.1.0' — status field next to the icon }
+      CWStudioVersionLabel);  { 'V1.6.2.0' — status field next to the icon }
   finally
     Bmp.Free;               { splash copy bitmap — can free }
   end;

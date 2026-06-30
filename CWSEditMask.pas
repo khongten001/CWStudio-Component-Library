@@ -35,7 +35,10 @@ uses
   Vcl.ImgList, System.UITypes;
 
 type
-  TCWSEditButtonStyle = (ebsNone, ebsClear, ebsSearch, ebsPassword, ebsCustom);
+  // Button style for the masked edit. A self-contained type with its own "embs"
+  // prefix so it never collides with TCWSEdit's ebs… style constants when both
+  // units are used together — no shared unit, no extra uses to remember.
+  TCWSEditMaskButtonStyle = (embsNone, embsClear, embsSearch, embsPassword, embsCustom);
 
   TCWSMaskBufferedEdit = class(TMaskEdit)
   private
@@ -93,7 +96,7 @@ type
     FAlignment: TAlignment;
     FEditMask: string;
     FValidateOnExit: Boolean;
-    FButtonStyle: TCWSEditButtonStyle;
+    FButtonStyle: TCWSEditMaskButtonStyle;
     FButtonIconColor: TColor;
     FButtonHoverColor: TColor;
     FButtonPressedColor: TColor;
@@ -148,7 +151,7 @@ type
     procedure SetValidateOnExit(const Value: Boolean);
     procedure DoMaskInvalid(Sender: TObject);
     procedure DoInputInvalid(Sender: TObject);
-    procedure SetButtonStyle(const Value: TCWSEditButtonStyle);
+    procedure SetButtonStyle(const Value: TCWSEditMaskButtonStyle);
     procedure SetButtonIconColor(const Value: TColor);
     procedure SetButtonHoverColor(const Value: TColor);
     procedure SetButtonPressedColor(const Value: TColor);
@@ -204,7 +207,7 @@ type
     function MakeGPColor(AColor: TColor; Alpha: Byte = 255): Cardinal;
     function CreateRoundRectPath(X, Y, W, H, R: Single): TGPGraphicsPath;
     procedure PaintToBuffer;
-    procedure DrawIcon(G: TGPGraphics; Rect: TGPRectF; Style: TCWSEditButtonStyle);
+    procedure DrawIcon(G: TGPGraphics; Rect: TGPRectF; Style: TCWSEditMaskButtonStyle);
   protected
     procedure CreateParams(var Params: TCreateParams); override;
     procedure Paint; override;
@@ -239,7 +242,7 @@ type
   published
     property EditMask: string read GetEditMask write SetEditMask;
     property ValidateOnExit: Boolean read FValidateOnExit write SetValidateOnExit default False;
-    property ButtonStyle: TCWSEditButtonStyle read FButtonStyle write SetButtonStyle default ebsNone;
+    property ButtonStyle: TCWSEditMaskButtonStyle read FButtonStyle write SetButtonStyle default embsNone;
     property ButtonIconColor: TColor read FButtonIconColor write SetButtonIconColor default $606060;
     property ButtonHoverColor: TColor read FButtonHoverColor write SetButtonHoverColor default $E5E5E5;
     property ButtonPressedColor: TColor read FButtonPressedColor write SetButtonPressedColor default $D9D9D9;
@@ -560,7 +563,7 @@ begin
   FDisabledBorderColor := $E0E0E0;
   FBorderColor := $D6D6D6;
   FLabelColor := $606060;
-  FButtonStyle := ebsNone;
+  FButtonStyle := embsNone;
   FButtonIconColor := $606060;
   FButtonHoverColor := $E5E5E5;
   FButtonPressedColor := $D9D9D9;
@@ -611,7 +614,7 @@ function TCWSEditMask.GetButtonRect: TRect;
 var
   BtnSize, Pad: Integer;
 begin
-  if FButtonStyle = ebsNone then
+  if FButtonStyle = embsNone then
     Exit(Rect(0, 0, 0, 0));
   Pad := Scale(2);
   BtnSize := Height - (Pad * 2);
@@ -621,14 +624,14 @@ end;
 procedure TCWSEditMask.HandleButtonClick;
 begin
   case FButtonStyle of
-    ebsClear:
+    embsClear:
       begin
         FEdit.Text := '';
         FEdit.SetFocus;
       end;
-    ebsSearch: if Assigned(FOnSearchClick) then
+    embsSearch: if Assigned(FOnSearchClick) then
         FOnSearchClick(Self);
-    ebsPassword:
+    embsPassword:
       begin
         if FEdit.PasswordChar = #0 then
           FEdit.PasswordChar := FPasswordChar
@@ -642,7 +645,7 @@ begin
     FOnButtonClick(Self);
 end;
 
-procedure TCWSEditMask.DrawIcon(G: TGPGraphics; Rect: TGPRectF; Style: TCWSEditButtonStyle);
+procedure TCWSEditMask.DrawIcon(G: TGPGraphics; Rect: TGPRectF; Style: TCWSEditMaskButtonStyle);
 var
   Pen: TGPPen;
   Brush: TGPSolidBrush;
@@ -678,7 +681,7 @@ begin
       // icon fills the button minus margin. Round prevents
       // the icon from "floating" between pixels and looking blurry.
       FinalMargin := Round(ScaleF(7.0));
-      if Style = ebsClear then
+      if Style = embsClear then
         FinalMargin := FinalMargin + ScaleF(0.5);
 
       IconR := Rect;
@@ -692,20 +695,20 @@ begin
     G.SetInterpolationMode(InterpolationModeHighQualityBicubic);
 
     case Style of
-      ebsClear:
+      embsClear:
         begin
           G.DrawLine(Pen, IconR.X, IconR.Y, IconR.X + IconR.Width, IconR.Y + IconR.Height);
           G.DrawLine(Pen, IconR.X + IconR.Width, IconR.Y, IconR.X, IconR.Y + IconR.Height);
         end;
 
-      ebsSearch:
+      embsSearch:
         begin
           G.DrawEllipse(Pen, IconR.X, IconR.Y, IconR.Width * 0.7, IconR.Height * 0.7);
           G.DrawLine(Pen, IconR.X + IconR.Width * 0.6, IconR.Y + IconR.Height * 0.6,
             IconR.X + IconR.Width, IconR.Y + IconR.Height);
         end;
 
-      ebsPassword:
+      embsPassword:
         begin
           G.DrawEllipse(Pen, IconR.X, IconR.Y + IconR.Height * 0.2, IconR.Width, IconR.Height * 0.6);
           G.FillEllipse(Brush, IconR.X + IconR.Width * 0.35, IconR.Y + IconR.Height * 0.35,
@@ -715,7 +718,7 @@ begin
               IconR.X, IconR.Y + IconR.Height * 0.8);
         end;
 
-      ebsCustom:
+      embsCustom:
         begin
           if Assigned(FImages) and (FImageIndex >= 0) and (FImageIndex < FImages.Count) then
           begin
@@ -798,7 +801,7 @@ begin
     finally Path.Free;
     end;
 
-    if FButtonStyle <> ebsNone then
+    if FButtonStyle <> embsNone then
     begin
       BtnR := GetButtonRect;
       if FButtonPressed and FButtonHovered then
@@ -886,7 +889,7 @@ begin
     Exit;
   Margin := Scale(8) + Round(ScaleF(FCornerRadius));
   L := Margin;
-  if FButtonStyle <> ebsNone then
+  if FButtonStyle <> embsNone then
     RightMargin := Width - GetButtonRect.Left + Scale(2)
   else
     RightMargin := Margin;
@@ -899,7 +902,7 @@ begin
   // Windows center the text exactly in the middle of the WHOLE component.
   // Without the button: InnerLeftMargin = 0 (RightMargin = Margin).
   InnerLeftMargin := 0;
-  if (FAlignment = taCenter) and (FButtonStyle <> ebsNone) then
+  if (FAlignment = taCenter) and (FButtonStyle <> embsNone) then
     InnerLeftMargin := RightMargin - Margin;
 
   // Save the margin BEFORE SetBounds, so that WMSize (triggered by
@@ -926,7 +929,7 @@ var
   IsOverBtn: Boolean;
 begin
   inherited;
-  if FButtonStyle <> ebsNone then
+  if FButtonStyle <> embsNone then
   begin
     IsOverBtn := PtInRect(GetButtonRect, Point(X, Y));
     if FButtonHovered <> IsOverBtn then
@@ -989,7 +992,7 @@ begin
     FEdit.SetFocus;
 end;
 
-procedure TCWSEditMask.SetButtonStyle(const Value: TCWSEditButtonStyle);
+procedure TCWSEditMask.SetButtonStyle(const Value: TCWSEditMaskButtonStyle);
 begin
   if FButtonStyle <> Value then
   begin
@@ -1042,7 +1045,7 @@ begin
   if FButtonIconSize <> NewVal then
   begin
     FButtonIconSize := NewVal;
-    if FButtonStyle <> ebsNone then
+    if FButtonStyle <> embsNone then
       Invalidate;
   end;
 end;
